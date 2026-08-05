@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contato - Lopes Veículos">
+    <title>Contato - Lopes Veículos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-info-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .contact-info-item i {
+            font-size: 2rem;
+            color: #ff6b6b;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .contact-info-item-content h3 {
+            margin: 0 0 0.5rem 0;
+            color: #1e3c72;
+        }
+
+        .contact-info-item-content p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-info-item-content a {
+            color: #ff6b6b;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .contact-info-item-content a:hover {
+            color: #1e3c72;
+        }
+
+        .message-alert {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .message-alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message-alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-info-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info-item i {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo.png" alt="Lopes Veículos" class="logo">
+                <span class="brand-name">Lopes Veículos</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="estoque.html">Estoque</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html" class="active">Contato</a></li>
+                <li><a href="admin/login.html" class="btn-admin">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Entre em Contato</h1>
+            <p>Estamos aqui para ajudar você</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="contact-container">
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h2>Envie uma Mensagem</h2>
+                    <div id="messageAlert" class="message-alert"></div>
+                    <form id="contactForm" onsubmit="enviarFormulario(event)">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo *</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone *</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="(19) 9999-9999" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="veiculo">Interesse em Veículo</label>
+                            <select id="veiculo" name="veiculo">
+                                <option value="">Selecione um veículo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="assunto">Assunto *</label>
+                            <input type="text" id="assunto" name="assunto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem *</label>
+                            <textarea id="mensagem" name="mensagem" required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">
+                            <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-info-item-content">
+                            <h3>Localização</h3>
+                            <p>Rua Maria Simões de Andrade, 1793<br>Salto, SP 13163-010</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-info-item-content">
+                            <h3>Telefone</h3>
+                            <p><a href="tel:+551933333333">(19) 3333-3333</a></p>
+                            <p>Seg-Sex: 08:00 às 18:00<br>Sábado: 08:00 às 14:00</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-info-item-content">
+                            <h3>WhatsApp</h3>
+                            <p><a href="https://wa.me/5519992599469" target="_blank">(19) 99259-9469</a></p>
+                            <p>Resposta rápida</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-info-item-content">
+                            <h3>Email</h3>
+                            <p><a href="mailto:lopesveiculosyahoo@gmail.com">lopesveiculosyahoo@gmail.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fab fa-instagram"></i>
+                        <div class="contact-info-item-content">
+                            <h3>Redes Sociais</h3>
+                            <p><a href="https://www.instagram.com/lopesveiculoss" target="_blank">@lopesveiculoss</a></p>
+                            <p>Acompanhe nossas novidades</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Maps -->
+    <section class="map-section">
+        <div class="container">
+            <h2>Nos Visite</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3669.0505638547046!2d-47.23451!3d-22.4167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c9c8f8f8f8f8f9%3A0x0!2sRua%20Maria%20Sim%C3%B5es%20de%20Andrade%2C%201793!5e0!3m2!1spt-BR!2sbr" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/5519992599469?text=Olá!%20Gostaria%20de%20informações" target="_blank" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lopes Veículos</h3>
+                    <p>Sua confiança é nossa prioridade</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="estoque.html">Estoque</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <ul>
+                        <li><a href="https://www.instagram.com/lopesveiculoss" target="_blank">Instagram</a></li>
+                        <li><a href="https://wa.me/5519992599469" target="_blank">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lopes Veículos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Carregar veículos no select
+        async function carregarVeiculosSelect() {
+            await carregarVeiculos();
+            const select = document.getElementById('veiculo');
+            veiculos.forEach(v => {
+                const option = document.createElement('option');
+                option.value = v.id;
+                option.textContent = `${v.marca} ${v.modelo} (${v.ano})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Enviar formulário
+        function enviarFormulario(event) {
+            event.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const telefone = document.getElementById('telefone').value;
+            const assunto = document.getElementById('assunto').value;
+            const mensagem = document.getElementById('mensagem').value;
+
+            // Validar campos
+            if (!nome || !email || !telefone || !assunto || !mensagem) {
+                mostrarMensagem('Todos os campos são obrigatórios', 'error');
+                return;
+            }
+
+            // Simular envio (em produção, seria enviado para um servidor)
+            mostrarMensagem('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
+            document.getElementById('contactForm').reset();
+
+            // Enviar também via WhatsApp
+            const textoWhatsApp = `Olá! Meu nome é ${nome}. ${mensagem}\n\nTelefone: ${telefone}\nEmail: ${email}`;
+            const linkWhatsApp = `https://wa.me/5519992599469?text=${encodeURIComponent(textoWhatsApp)}`;
+            window.open(linkWhatsApp, '_blank');
+        }
+
+        function mostrarMensagem(texto, tipo) {
+            const alert = document.getElementById('messageAlert');
+            alert.textContent = texto;
+            alert.className = `message-alert ${tipo}`;
+            
+            setTimeout(() => {
+                alert.className = 'message-alert';
+            }, 5000);
+        }
+
+        // Carregar ao abrir página
+        document.addEventListener('DOMContentLoaded', () => {
+            setupMobileMenu();
+            atualizarLinksAtivos();
+            carregarVeiculosSelect();
+        });
+    </script>
+</body>
+</html>
