@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerenciar Veículos - Lopes Veículos Admin">
+    <title>Gerenciar Veículos - Lopes Veículos Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(135deg, #1e3c72 0%, #2d5a8c 100%);
+            color: white;
+            padding: 2rem 0;
+            position: fixed;
+            width: 250px;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 1rem 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #ff6b6b;
+        }
+
+        .sidebar-menu a.active {
+            background: rgba(255,255,255,0.15);
+            border-left-color: #ff6b6b;
+        }
+
+        .sidebar-menu i {
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 1.5rem;
+        }
+
+        .sidebar-footer a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-footer a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .header-actions button {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.2);
+        }
+
+        /* Table Section */
+        .table-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background: #f5f7fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        table th {
+            padding: 1rem;
+            text-align: left;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .vehicle-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.sold {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-badge.maintenance {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-buttons button {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .btn-edit {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-edit:hover,
+        .btn-delete:hover {
+            transform: scale(1.05);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pagination button {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid #ddd;
+            background: white;
+            color: #333;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button.active {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        .pagination button:hover {
+            background: #f0f0f0;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            animation: slideDown 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 1rem;
+        }
+
+        .modal-header h2 {
+            color: #1e3c72;
+        }
+
+        .modal-header .close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+            padding-top: 1rem;
+        }
+
+        .modal-footer button {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-cancel {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background: #dee2e6;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            color: white;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -250px;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+
+            table th, table td {
+                padding: 0.75rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-car" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                <h2>Lopes</h2>
+                <p>Admin Panel</p>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="veiculos.html" class="active"><i class="fas fa-car"></i> Veículos</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Clientes</a></li>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i> Vendas</a></li>
+                <li><a href="#"><i class="fas fa-images"></i> Galeria</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="#" onclick="fazerLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Gerenciar Veículos</h1>
+                <div class="header-actions">
+                    <button class="btn-primary" onclick="abrirModalAdicionar()">
+                        <i class="fas fa-plus"></i> Novo Veículo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label for="filterMarca">Marca</label>
+                        <select id="filterMarca">
+                            <option value="">Todas as marcas</option>
+                            <option value="volkswagen">Volkswagen</option>
+                            <option value="chevrolet">Chevrolet</option>
+                            <option value="hyundai">Hyundai</option>
+                            <option value="fiat">Fiat</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterAno">Ano</label>
+                        <select id="filterAno">
+                            <option value="">Todos os anos</option>
+                            <option value="2026">2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterStatus">Status</label>
+                        <select id="filterStatus">
+                            <option value="">Todos os status</option>
+                            <option value="available">Disponível</option>
+                            <option value="sold">Vendido</option>
+                            <option value="maintenance">Manutenção</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterBusca">Buscar</label>
+                        <input type="text" id="filterBusca" placeholder="Modelo ou placa...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="table-section">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Imagem</th>
+                                <th>Modelo</th>
+                                <th>Marca</th>
+                                <th>Ano</th>
+                                <th>Placa</th>
+                                <th>Preço</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vehicleTableBody">
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50?text=Gol" alt="Gol" class="vehicle-image"></td>
+                                <td>Gol</td>
+                                <td>Volkswagen</td>
+                                <td>2022</td>
+                                <td>ABC-1234</td>
+                                <td>R$ 45.000</td>
+                                <td><span class="status-badge available">Disponível</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-edit" onclick="abrirModalEditar(1)">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                        <button class="btn-delete" onclick="deletarVeiculo(1)">
+                                            <i class="fas fa-trash"></i> Deletar
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50?text=Onix" alt="Onix" class="vehicle-image"></td>
+                                <td>Onix</td>
+                                <td>Chevrolet</td>
+                                <td>2021</td>
+                                <td>XYZ-5678</td>
+                                <td>R$ 52.000</td>
+                                <td><span class="status-badge available">Disponível</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-edit" onclick="abrirModalEditar(2)">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                        <button class="btn-delete" onclick="deletarVeiculo(2)">
+                                            <i class="fas fa-trash"></i> Deletar
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50?text=HB20" alt="HB20" class="vehicle-image"></td>
+                                <td>HB20</td>
+                                <td>Hyundai</td>
+                                <td>2020</td>
+                                <td>DEF-9012</td>
+                                <td>R$ 48.000</td>
+                                <td><span class="status-badge sold">Vendido</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-edit" onclick="abrirModalEditar(3)">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                        <button class="btn-delete" onclick="deletarVeiculo(3)">
+                                            <i class="fas fa-trash"></i> Deletar
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button onclick="goToPage(1)">« Anterior</button>
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>Próximo »</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Adicionar/Editar Veículo -->
+    <div id="vehicleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Novo Veículo</h2>
+                <button class="close" onclick="fecharModal()">&times;</button>
+            </div>
+
+            <form id="vehicleForm" onsubmit="salvarVeiculo(event)">
+                <div class="form-group">
+                    <label for="marca">Marca *</label>
+                    <select id="marca" required>
+                        <option value="">Selecione a marca</option>
+                        <option value="volkswagen">Volkswagen</option>
+                        <option value="chevrolet">Chevrolet</option>
+                        <option value="hyundai">Hyundai</option>
+                        <option value="fiat">Fiat</option>
+                        <option value="ford">Ford</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modelo">Modelo *</label>
+                    <input type="text" id="modelo" placeholder="Ex: Gol" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ano">Ano *</label>
+                    <input type="number" id="ano" placeholder="Ex: 2022" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="placa">Placa *</label>
+                    <input type="text" id="placa" placeholder="Ex: ABC-1234" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="preco">Preço (R$) *</label>
+                    <input type="number" id="preco" placeholder="Ex: 45000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status *</label>
+                    <select id="status" required>
+                        <option value="available">Disponível</option>
+                        <option value="sold">Vendido</option>
+                        <option value="maintenance">Manutenção</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" placeholder="Descrição do veículo..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="imagem">URL da Imagem</label>
+                    <input type="url" id="imagem" placeholder="https://...">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Verificar autenticação
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        function abrirModalAdicionar() {
+            document.getElementById('modalTitle').textContent = 'Novo Veículo';
+            document.getElementById('vehicleForm').reset();
+            document.getElementById('vehicleModal').classList.add('show');
+        }
+
+        function abrirModalEditar(id) {
+            document.getElementById('modalTitle').textContent = 'Editar Veículo';
+            document.getElementById('vehicleForm').reset();
+            
+            // Preencher formulário com dados do veículo (exemplo)
+            document.getElementById('marca').value = 'volkswagen';
+            document.getElementById('modelo').value = 'Gol';
+            document.getElementById('ano').value = '2022';
+            document.getElementById('placa').value = 'ABC-1234';
+            document.getElementById('preco').value = '45000';
+            
+            document.getElementById('vehicleModal').classList.add('show');
+        }
+
+        function fecharModal() {
+            document.getElementById('vehicleModal').classList.remove('show');
+        }
+
+        function salvarVeiculo(event) {
+            event.preventDefault();
+            
+            const formData = {
+                marca: document.getElementById('marca').value,
+                modelo: document.getElementById('modelo').value,
+                ano: document.getElementById('ano').value,
+                placa: document.getElementById('placa').value,
+                preco: document.getElementById('preco').value,
+                status: document.getElementById('status').value,
+                descricao: document.getElementById('descricao').value,
+                imagem: document.getElementById('imagem').value
+            };
+
+            console.log('Veículo salvo:', formData);
+            alert('Veículo salvo com sucesso!');
+            fecharModal();
+        }
+
+        function deletarVeiculo(id) {
+            if (confirm('Tem certeza que deseja deletar este veículo?')) {
+                alert('Veículo deletado com sucesso!');
+                location.reload();
+            }
+        }
+
+        function goToPage(page) {
+            alert('Ir para página ' + page);
+        }
+
+        function fazerLogout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('adminLogado');
+                localStorage.removeItem('adminEmail');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Filtrar veículos
+        document.getElementById('filterBusca').addEventListener('keyup', function() {
+            console.log('Buscando por:', this.value);
+        });
+    </script>
+</body>
+</html>
