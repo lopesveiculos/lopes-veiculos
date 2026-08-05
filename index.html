@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lopes Veículos - Compra e venda de veículos novos e usados. Estoque completo com financiamento e troca de usados.">
+    <meta name="keywords" content="carros usados, compra de carros, venda de carros, Toyota, Ford, Hyundai, BMW, financiamento">
+    <meta name="author" content="Lopes Veículos">
+    <title>Lopes Veículos - Compre seu Carro com Confiança</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo.png" alt="Lopes Veículos" class="logo">
+                <span class="brand-name">Lopes Veículos</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Início</a></li>
+                <li><a href="estoque.html">Estoque</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="admin/login.html" class="btn-admin">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Encontre o Carro Perfeito</h1>
+            <p>Estoque completo com as melhores marcas e preços</p>
+            <a href="estoque.html" class="btn btn-primary">Ver Estoque</a>
+        </div>
+        <div class="hero-overlay"></div>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-form">
+                <input type="text" id="searchInput" placeholder="Buscar por marca ou modelo...">
+                <select id="marcaFilter">
+                    <option value="">Todas as marcas</option>
+                </select>
+                <select id="precoFilter">
+                    <option value="">Faixa de preço</option>
+                    <option value="0-30000">Até R$ 30.000</option>
+                    <option value="30000-50000">R$ 30.000 a R$ 50.000</option>
+                    <option value="50000-100000">R$ 50.000 a R$ 100.000</option>
+                    <option value="100000-999999">Acima de R$ 100.000</option>
+                </select>
+                <button onclick="buscarVeiculos()" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Vehicles -->
+    <section class="featured-section">
+        <div class="container">
+            <h2>Destaques do Estoque</h2>
+            <div id="featuredVehicles" class="vehicles-grid">
+                <!-- Carregado via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Financing Section -->
+    <section class="financing-section">
+        <div class="container">
+            <h2>💰 Financiamos Seu Sonho</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Financiamento Facilitado</h3>
+                    <p>Parcelamos em até 60 meses com as melhores taxas</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Aceitamos Seu Usado</h3>
+                    <p>Troque seu carro antigo pelo novo com melhor avaliação</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Garantia</h3>
+                    <p>Todos os veículos inspecionados e com documentação em dia</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Seguro Incluído</h3>
+                    <p>Consultoria gratuita para seu seguro de vida</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info-grid">
+                <!-- Contact Info -->
+                <div class="info-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Localização</h3>
+                    <p>Rua Maria Simões de Andrade, 1793<br>CEP: 13163-010</p>
+                </div>
+                <!-- Hours -->
+                <div class="info-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Horário</h3>
+                    <p>Seg-Sex: 08:00 às 18:00<br>Sábado: 08:00 às 14:00</p>
+                </div>
+                <!-- WhatsApp -->
+                <div class="info-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>WhatsApp</h3>
+                    <p><a href="https://wa.me/5519992599469" target="_blank">(19) 99259-9469</a></p>
+                </div>
+                <!-- Instagram -->
+                <div class="info-card">
+                    <i class="fab fa-instagram"></i>
+                    <h3>Instagram</h3>
+                    <p><a href="https://www.instagram.com/lopesveiculoss" target="_blank">@lopesveiculoss</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Maps -->
+    <section class="map-section">
+        <div class="container">
+            <h2>Nos Visite</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3669.0505638547046!2d-47.23451!3d-22.4167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c9c8f8f8f8f8f9%3A0x0!2sRua%20Maria%20Sim%C3%B5es%20de%20Andrade%2C%201793!5e0!3m2!1spt-BR!2sbr" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/5519992599469?text=Olá!%20Gostaria%20de%20informações%20sobre%20os%20veículos" target="_blank" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lopes Veículos</h3>
+                    <p>Sua confiança é nossa prioridade</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="estoque.html">Estoque</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <ul>
+                        <li><a href="https://www.instagram.com/lopesveiculoss" target="_blank">Instagram</a></li>
+                        <li><a href="https://wa.me/5519992599469" target="_blank">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lopes Veículos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
