@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sobre - Lopes Veículos">
+    <title>Sobre - Lopes Veículos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .about-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .highlight-item {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .highlight-item i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-item h4 {
+            margin: 0.5rem 0;
+        }
+
+        .highlight-item p {
+            margin: 0;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+        }
+
+        .values-section {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+        }
+
+        .values-section h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 2rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .value-card i {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .team-section {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+        }
+
+        .team-section h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-member-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            background: #f0f0f0;
+        }
+
+        .team-member h3 {
+            color: #1e3c72;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-member p {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-member-bio {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2d5a8c 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-highlights {
+                grid-template-columns: 1fr;
+            }
+
+            .values-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo.png" alt="Lopes Veículos" class="logo">
+                <span class="brand-name">Lopes Veículos</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="estoque.html">Estoque</a></li>
+                <li><a href="sobre.html" class="active">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="admin/login.html" class="btn-admin">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Sobre Nós</h1>
+            <p>Conheça nossa história e missão</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="about-container">
+                <img src="https://via.placeholder.com/500x400?text=Lopes+Veículos" alt="Lopes Veículos" class="about-image">
+                <div class="about-content">
+                    <h2>Quem Somos</h2>
+                    <p>
+                        A Lopes Veículos é uma concessionária localizada em Salto, SP, especializada em venda de veículos 
+                        de qualidade com excelente custo-benefício. Com mais de 10 anos de experiência no mercado automóvel, 
+                        garantimos transparência e confiança em todas as negociações.
+                    </p>
+                    <p>
+                        Nossa missão é oferecer veículos em perfeito estado de funcionamento, com documentação completa 
+                        e assistência pós-venda de qualidade. Acreditamos que a satisfação do cliente é o melhor indicador 
+                        de sucesso.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-car"></i>
+                            <h4>+500</h4>
+                            <p>Veículos Vendidos</p>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-star"></i>
+                            <h4>4.8/5</h4>
+                            <p>Avaliação dos Clientes</p>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-users"></i>
+                            <h4>+1000</h4>
+                            <p>Clientes Satisfeitos</p>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-trophy"></i>
+                            <h4>10+</h4>
+                            <p>Anos de Experiência</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="values-section">
+                <h2>Nossos Valores</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Honestidade</h3>
+                        <p>Transações transparentes e honestas com todos os nossos clientes, sem ocultar informações.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Comprometimento</h3>
+                        <p>Dedicados a entregar qualidade e excelência em cada veículo e serviço prestado.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Confiabilidade</h3>
+                        <p>Seus veículos passam por rigorosa inspeção antes de serem disponibilizados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="team-section">
+                <h2>Nossa Equipe</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/300x250?text=Gerente" alt="Gerente" class="team-member-image">
+                        <h3>João Lopes</h3>
+                        <p>Proprietário & Gerente Geral</p>
+                        <div class="team-member-bio">
+                            Mais de 15 anos de experiência no mercado automóvel. Apaixonado por qualidade e satisfação do cliente.
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/300x250?text=Vendedor" alt="Vendedor" class="team-member-image">
+                        <h3>Carlos Silva</h3>
+                        <p>Vendedor Especializado</p>
+                        <div class="team-member-bio">
+                            Dedicado a encontrar o veículo perfeito para cada cliente com profissionalismo e atenção.
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/300x250?text=Mecânico" alt="Mecânico" class="team-member-image">
+                        <h3>Roberto Costa</h3>
+                        <p>Mecânico Certificado</p>
+                        <div class="team-member-bio">
+                            Garante que todos os veículos estejam em perfeito estado de funcionamento antes da venda.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Encontre o Veículo Perfeito</h2>
+                <p>Visite nosso estoque e descubra as melhores opções de veículos para você</p>
+                <a href="estoque.html" class="btn btn-light">Ver Estoque Completo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/5519992599469" target="_blank" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lopes Veículos</h3>
+                    <p>Sua confiança é nossa prioridade</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="estoque.html">Estoque</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <ul>
+                        <li><a href="https://www.instagram.com/lopesveiculoss" target="_blank">Instagram</a></li>
+                        <li><a href="https://wa.me/5519992599469" target="_blank">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lopes Veículos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setupMobileMenu();
+            atualizarLinksAtivos();
+        });
+    </script>
+</body>
+</html>
