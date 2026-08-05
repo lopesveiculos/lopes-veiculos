@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Estoque completo de veículos - Lopes Veículos">
+    <title>Estoque - Lopes Veículos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo.png" alt="Lopes Veículos" class="logo">
+                <span class="brand-name">Lopes Veículos</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="estoque.html" class="active">Estoque</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="admin/login.html" class="btn-admin">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Nosso Estoque Completo</h1>
+            <p>Encontre o veículo perfeito para você</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-form">
+                <input type="text" id="searchInput" placeholder="Buscar por marca ou modelo...">
+                <select id="marcaFilter">
+                    <option value="">Todas as marcas</option>
+                </select>
+                <select id="precoFilter">
+                    <option value="">Faixa de preço</option>
+                    <option value="0-30000">Até R$ 30.000</option>
+                    <option value="30000-50000">R$ 30.000 a R$ 50.000</option>
+                    <option value="50000-100000">R$ 50.000 a R$ 100.000</option>
+                    <option value="100000-999999">Acima de R$ 100.000</option>
+                </select>
+                <button onclick="buscarVeiculos()" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicles Grid -->
+    <section class="featured-section">
+        <div class="container">
+            <div id="vehiclesContainer" class="vehicles-grid">
+                <p class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando veículos...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/5519992599469?text=Olá!%20Gostaria%20de%20informações%20sobre%20os%20veículos" target="_blank" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lopes Veículos</h3>
+                    <p>Sua confiança é nossa prioridade</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="estoque.html">Estoque</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <ul>
+                        <li><a href="https://www.instagram.com/lopesveiculoss" target="_blank">Instagram</a></li>
+                        <li><a href="https://wa.me/5519992599469" target="_blank">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lopes Veículos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+    </style>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Carregar veículos ao abrir a página
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarVeiculos();
+            exibirVeiculos();
+        });
+    </script>
+</body>
+</html>
