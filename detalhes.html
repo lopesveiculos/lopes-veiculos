@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalhes do veículo - Lopes Veículos">
+    <title>Detalhes do Veículo - Lopes Veículos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .details-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #f0f0f0;
+        }
+
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            border-color: #ff6b6b;
+        }
+
+        .specs-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .spec-item i {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .spec-item-content h4 {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .spec-item-content p {
+            margin: 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .vehicle-title {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .vehicle-price {
+            font-size: 2rem;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .details-container {
+                grid-template-columns: 1fr;
+            }
+
+            .specs-list {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .main-image {
+                height: 300px;
+            }
+
+            .vehicle-title {
+                font-size: 1.5rem;
+            }
+
+            .vehicle-price {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo.png" alt="Lopes Veículos" class="logo">
+                <span class="brand-name">Lopes Veículos</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="estoque.html">Estoque</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="admin/login.html" class="btn-admin">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Detalhes do Veículo</h1>
+        </div>
+    </section>
+
+    <!-- Vehicle Details -->
+    <section class="featured-section">
+        <div class="container">
+            <div id="vehicleDetails" class="details-container">
+                <p class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando detalhes...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Similar Vehicles -->
+    <section class="featured-section">
+        <div class="container">
+            <h2>Veículos Similares</h2>
+            <div id="similarVehicles" class="vehicles-grid">
+                <!-- Carregado via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/5519992599469" target="_blank" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lopes Veículos</h3>
+                    <p>Sua confiança é nossa prioridade</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="estoque.html">Estoque</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <ul>
+                        <li><a href="https://www.instagram.com/lopesveiculoss" target="_blank">Instagram</a></li>
+                        <li><a href="https://wa.me/5519992599469" target="_blank">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lopes Veículos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Obter ID do veículo da URL
+        function obterIdVeiculo() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        // Carregar detalhes do veículo
+        async function carregarDetalhes() {
+            const id = obterIdVeiculo();
+            if (!id) {
+                document.getElementById('vehicleDetails').innerHTML = '<p class="error">Veículo não encontrado</p>';
+                return;
+            }
+
+            await carregarVeiculos();
+            const veiculo = veiculos.find(v => v.id == id);
+
+            if (!veiculo) {
+                document.getElementById('vehicleDetails').innerHTML = '<p class="error">Veículo não encontrado</p>';
+                return;
+            }
+
+            // Exibir detalhes
+            const linkWhatsApp = `https://wa.me/5519992599469?text=Olá!%20Tenho%20interesse%20no%20${veiculo.marca}%20${veiculo.modelo}%20${veiculo.ano}%20anunciado%20no%20site%20da%20Lopes%20Veículos.%20Preço:%20R$%20${veiculo.preco}`;
+
+            document.getElementById('vehicleDetails').innerHTML = `
+                <div class="gallery">
+                    <img src="${veiculo.imagem || 'https://via.placeholder.com/500x400?text=' + veiculo.marca + '+' + veiculo.modelo}" alt="${veiculo.marca} ${veiculo.modelo}" class="main-image" id="mainImage">
+                    <div class="thumbnails">
+                        <img src="${veiculo.imagem || 'https://via.placeholder.com/500x400?text=' + veiculo.marca + '+' + veiculo.modelo}" alt="Imagem 1" class="thumbnail active" onclick="trocarImagem(this)">
+                        <img src="https://via.placeholder.com/500x400?text=Imagem+2" alt="Imagem 2" class="thumbnail" onclick="trocarImagem(this)">
+                        <img src="https://via.placeholder.com/500x400?text=Imagem+3" alt="Imagem 3" class="thumbnail" onclick="trocarImagem(this)">
+                        <img src="https://via.placeholder.com/500x400?text=Imagem+4" alt="Imagem 4" class="thumbnail" onclick="trocarImagem(this)">
+                    </div>
+                </div>
+                <div>
+                    <h1 class="vehicle-title">${veiculo.marca} ${veiculo.modelo}</h1>
+                    <div class="vehicle-price">R$ ${formatarPreco(veiculo.preco)}</div>
+                    <p class="description">
+                        Veículo em perfeito estado de funcionamento. Revisado e com documentação completa.
+                        Veja mais detalhes técnicos abaixo e entre em contato conosco para mais informações.
+                    </p>
+
+                    <div class="specs-list">
+                        <div class="spec-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="spec-item-content">
+                                <h4>Ano</h4>
+                                <p>${veiculo.ano}</p>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <div class="spec-item-content">
+                                <h4>Quilometragem</h4>
+                                <p>${veiculo.km.toLocaleString()} km</p>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-gas-pump"></i>
+                            <div class="spec-item-content">
+                                <h4>Combustível</h4>
+                                <p>${veiculo.combustivel}</p>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-cog"></i>
+                            <div class="spec-item-content">
+                                <h4>Câmbio</h4>
+                                <p>${veiculo.cambio}</p>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-palette"></i>
+                            <div class="spec-item-content">
+                                <h4>Cor</h4>
+                                <p>${veiculo.cor}</p>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-id-card"></i>
+                            <div class="spec-item-content">
+                                <h4>Placa</h4>
+                                <p>${veiculo.placa}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="${linkWhatsApp}" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
+                        </a>
+                        <a href="contato.html" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i> Enviar Mensagem
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            // Exibir similares
+            const similares = veiculos.filter(v => v.marca === veiculo.marca && v.id != id).slice(0, 3);
+            document.getElementById('similarVehicles').innerHTML = similares.map(v => criarCartaoVeiculo(v)).join('');
+        }
+
+        function trocarImagem(img) {
+            document.getElementById('mainImage').src = img.src;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            img.classList.add('active');
+        }
+
+        // Carregar ao abrir página
+        document.addEventListener('DOMContentLoaded', carregarDetalhes);
+    </script>
+</body>
+</html>
