@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard - Lopes Veículos Admin">
+    <title>Dashboard - Lopes Veículos Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(135deg, #1e3c72 0%, #2d5a8c 100%);
+            color: white;
+            padding: 2rem 0;
+            position: fixed;
+            width: 250px;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 1rem 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #ff6b6b;
+        }
+
+        .sidebar-menu a.active {
+            background: rgba(255,255,255,0.15);
+            border-left-color: #ff6b6b;
+        }
+
+        .sidebar-menu i {
+            margin-right: 1rem;
+            width: 20px;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 1.5rem;
+        }
+
+        .sidebar-footer a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-footer a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .header-actions button {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .header-actions .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            color: white;
+        }
+
+        .header-actions .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .header-actions .btn-secondary {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .header-actions .btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 1.8rem;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        .stat-card .trend {
+            font-size: 0.8rem;
+            color: #28a745;
+            margin-top: 0.5rem;
+        }
+
+        /* Tables */
+        .table-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .table-section h2 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background: #f5f7fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        table th {
+            padding: 1rem;
+            text-align: left;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-buttons button {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-buttons .btn-edit {
+            background: #007bff;
+            color: white;
+        }
+
+        .action-buttons .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .action-buttons button:hover {
+            transform: scale(1.05);
+        }
+
+        /* User Profile */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: absolute;
+                left: -250px;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .table-responsive {
+                font-size: 0.9rem;
+            }
+
+            table th, table td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-car" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                <h2>Lopes</h2>
+                <p>Admin Panel</p>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-car"></i> Veículos</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Clientes</a></li>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i> Vendas</a></li>
+                <li><a href="#"><i class="fas fa-images"></i> Galeria</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="#" onclick="fazerLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <h1>Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn-primary" onclick="adicionarVeiculo()">
+                        <i class="fas fa-plus"></i> Novo Veículo
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-avatar">A</div>
+                        <div>
+                            <div style="font-weight: 600;">Admin</div>
+                            <div style="font-size: 0.9rem; color: #666;">admin@lopes.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Veículos em Estoque</h3>
+                    <div class="value">48</div>
+                    <div class="trend">↑ 5 novos esta semana</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Vendas Este Mês</h3>
+                    <div class="value">R$ 250.000</div>
+                    <div class="trend">↑ 12% vs mês anterior</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Clientes Ativos</h3>
+                    <div class="value">156</div>
+                    <div class="trend">↑ 8 novos clientes</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Visualizações</h3>
+                    <div class="value">3.2K</div>
+                    <div class="trend">↑ 24% vs semana anterior</div>
+                </div>
+            </div>
+
+            <!-- Veículos Recentes -->
+            <div class="table-section">
+                <h2>Veículos Adicionados Recentemente</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Modelo</th>
+                                <th>Marca</th>
+                                <th>Ano</th>
+                                <th>Preço</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gol</td>
+                                <td>Volkswagen</td>
+                                <td>2022</td>
+                                <td>R$ 45.000</td>
+                                <td><span class="status-badge active">Disponível</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-edit">Editar</button>
+                                        <button class="btn-delete">Deletar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Onix</td>
+                                <td>Chevrolet</td>
+                                <td>2021</td>
+                                <td>R$ 52.000</td>
+                                <td><span class="status-badge active">Disponível</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-edit">Editar</button>
+                                        <button class="btn-delete">Deletar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HB20</td>
+                                <td>Hyundai</td>
+                                <td>2020</td>
+                                <td>R$ 48.000</td>
+                                <td><span class="status-badge inactive">Vendido</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-edit">Editar</button>
+                                        <button class="btn-delete">Deletar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Últimas Vendas -->
+            <div class="table-section">
+                <h2>Últimas Vendas</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Veículo</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#1001</td>
+                                <td>João Silva</td>
+                                <td>Gol 2022</td>
+                                <td>R$ 45.000</td>
+                                <td>05/08/2026</td>
+                                <td><span class="status-badge active">Concluída</span></td>
+                            </tr>
+                            <tr>
+                                <td>#1000</td>
+                                <td>Maria Santos</td>
+                                <td>Onix 2021</td>
+                                <td>R$ 52.000</td>
+                                <td>04/08/2026</td>
+                                <td><span class="status-badge active">Concluída</span></td>
+                            </tr>
+                            <tr>
+                                <td>#999</td>
+                                <td>Pedro Costa</td>
+                                <td>HB20 2020</td>
+                                <td>R$ 48.000</td>
+                                <td>03/08/2026</td>
+                                <td><span class="status-badge active">Concluída</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Verificar se está autenticado
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        function adicionarVeiculo() {
+            alert('Redirecionando para adicionar novo veículo...');
+            // Implementar página de adicionar veículo
+        }
+
+        function fazerLogout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('adminLogado');
+                localStorage.removeItem('adminEmail');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
